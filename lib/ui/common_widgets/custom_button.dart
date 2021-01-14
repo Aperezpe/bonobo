@@ -8,6 +8,9 @@ class CustomButton extends StatelessWidget {
     this.disableColor,
     this.textColor,
     @required this.onPressed,
+    this.height: 50,
+    this.width: 350,
+    this.padding,
   });
 
   final String text;
@@ -15,13 +18,15 @@ class CustomButton extends StatelessWidget {
   final Color textColor;
   final Color disableColor;
   final VoidCallback onPressed;
+  final double height;
+  final double width;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
       color: color,
       disabledColor: disableColor,
-      padding: EdgeInsets.all(15.0),
       child: Text(
         text,
         style: TextStyle(
@@ -30,9 +35,10 @@ class CustomButton extends StatelessWidget {
           fontWeight: FontWeight.w500,
         ),
       ),
+      padding: padding != null ? padding : EdgeInsets.all(15.0),
       elevation: 5.0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(50),
       ),
       onPressed: onPressed,
     );

@@ -10,6 +10,9 @@ class SignInTextField extends StatelessWidget {
     this.textInputAction,
     this.onEditingComplete,
     this.obscureText = false,
+    this.errorText = '',
+    @required this.onChanged,
+    this.enabled = true,
   });
 
   final TextEditingController controller;
@@ -17,7 +20,10 @@ class SignInTextField extends StatelessWidget {
   final IconData icon;
   final TextInputAction textInputAction;
   final VoidCallback onEditingComplete;
+  final ValueChanged<String> onChanged;
   final bool obscureText;
+  final String errorText;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +42,14 @@ class SignInTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
           borderSide: BorderSide.none,
         ),
+        errorText: errorText,
+        enabled: enabled,
       ),
       obscureText: obscureText,
       autocorrect: false,
       keyboardType: TextInputType.emailAddress,
       textInputAction: textInputAction,
+      onChanged: onChanged,
       onEditingComplete: onEditingComplete,
     );
   }

@@ -11,10 +11,11 @@ class User {
 abstract class AuthBase {
   Stream<User> get onAuthStateChanged;
   Future<User> currentUser();
-  Future<User> signInAnonymously();
+  Future<String> getUserName();
   Future<User> signInWithGoogle();
   Future<User> signInWithEmailAndPassword(String email, String password);
-  Future<User> createUserWithEmailAndPassword(String email, String password);
+  Future<User> createUserWithEmailAndPassword(
+      String name, String email, String password);
   Future<void> signOut();
 }
 
@@ -33,15 +34,15 @@ class Auth implements AuthBase {
   }
 
   @override
-  Future<User> currentUser() async {
+  Future<String> getUserName() async {
     final user = await _firebaseAuth.currentUser();
-    return _userFromFirebase(user);
+    return user.displayName;
   }
 
   @override
-  Future<User> signInAnonymously() async {
-    final authResult = await _firebaseAuth.signInAnonymously();
-    return _userFromFirebase(authResult.user);
+  Future<User> currentUser() async {
+    final user = await _firebaseAuth.currentUser();
+    return _userFromFirebase(user);
   }
 
   @override
@@ -53,9 +54,16 @@ class Auth implements AuthBase {
 
   @override
   Future<User> createUserWithEmailAndPassword(
-      String email, String password) async {
+      String name, String email, String password) async {
     final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
+
+    final userUpdateInfo = UserUpdateInfo();
+    userUpdateInfo.displayName = name;
+
+    final user = authResult.user;
+    user.updateProfile(userUpdateInfo);
+
     return _userFromFirebase(authResult.user);
   }
 
