@@ -151,7 +151,7 @@ class _FriendPageState extends State<FriendPage>
   Widget _buildBudgetFilter() {
     return Container(
       padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-      height: 60,
+      height: 61,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
